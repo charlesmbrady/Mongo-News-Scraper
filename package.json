@@ -1,0 +1,27 @@
+{
+  "name": "Mongo-News-Scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlesmbrady/Mongo-News-Scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charlesmbrady/Mongo-News-Scraper/issues"
+  },
+  "homepage": "https://github.com/charlesmbrady/Mongo-News-Scraper#readme",
+  "dependencies": {
+    "jest": "^24.7.1"
+  },
+  "devDependencies": {
+    "cypress": "^3.2.0"
+  }
+}
