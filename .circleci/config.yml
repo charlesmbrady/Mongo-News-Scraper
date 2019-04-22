@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run test
-      - run: npm run cypress run
+      - run: npm run cy:run
 workflows:
   version: 2
   build_and_test:
