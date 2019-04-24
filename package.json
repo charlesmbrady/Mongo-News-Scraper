@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/charlesmbrady/Mongo-News-Scraper#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "chai": "^4.2.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.16.4",
     "jest": "^24.7.1",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "mongoose": "^5.5.3"
   },
   "devDependencies": {
     "cypress": "^3.2.0"
