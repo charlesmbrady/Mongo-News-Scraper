@@ -135,11 +135,45 @@ app.post("/save/:id", (req, res) => {
   );
 });
 
+app.post("/unsave/:id", (req, res) => {
 
+  // Update the note that matches the object id
+  db.Article.update(
+    {
+      _id: mongojs.ObjectId(req.params.id)
+    },
+    {
+      // Set the title, note and modified parameters
+      // sent in the req body.
+      $set: {
+        saved: false
+      }
+    },
+    (error, edited) => {
+      // Log any errors from mongojs
+      if (error) {
+        console.log(error);
+        res.send(error);
+      }
+      else {
+        // Otherwise, send the mongojs response to the browser
+        // This will fire off the success function of the ajax request
+        console.log(edited);
+        res.send(edited);
+      }
+    }
+  );
 
-
+  
+});
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
+
+
+
+
+
+

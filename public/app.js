@@ -33,7 +33,9 @@ $(document).ready(function () {
       `
       <div class="card" style="width: 18rem;">
         <img src=${data.image} class="card-img-top" alt="...">
-        <i class="fas fa-clipboard note fa-2x" data-id=${data._id}></i>
+        <button class="note" type="button" data-toggle="modal" data-target="#exampleModalCenter">
+          <i class="fas fa-clipboard note fa-2x" data-id=${data._id}></i>
+        </button>
         <i class="fas fa-minus-circle delete fa-2x" data-id=${data._id}></i>
         <div class="card-body">
           <a href=${data.link} target='_blank'><p class="card-text">${data.title}</p></a>
@@ -72,15 +74,15 @@ $(document).ready(function () {
       method: "GET",
       url: "/saved"
     }).then(data => {
-      if (data.length > 0) {
-        $("#articles").empty();
-        // For each one
-        for (let i = 0; i < data.length; i++) {
-          // Display the apropos information on the page
-          const article = renderSaved(data[i]);
-          $("#articles").append(article);
-        }
+      // if (data.length > 0) {
+      $("#articles").empty();
+      // For each one
+      for (let i = 0; i < data.length; i++) {
+        // Display the apropos information on the page
+        const article = renderSaved(data[i]);
+        $("#articles").append(article);
       }
+      // }
       renderSaved();
     })
   })
@@ -196,6 +198,45 @@ $(document).ready(function () {
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
+  });
+
+
+
+  // unsave an article
+  $(document).on("click", ".delete", function () {
+    // Save the selected element
+    let selected = $(this);
+    console.log(selected.attr('data-id'));
+    // Make an AJAX POST request
+    // This uses the data-id of the update button,
+    // which is linked to the specific note title
+    // that the user clicked before
+    $.ajax({
+      type: "POST",
+      url: "/unsave/" + selected.attr("data-id"),
+      dataType: "json",
+      data: {
+        saved: false
+      },
+      // On successful call
+      success: (data) => {
+        console.log('article removed from saved');
+      }
+    }).then(function () {
+      console.log("in it");
+      $.getJSON("/saved", data => {
+
+        $("#articles").empty();
+        // For each one
+        for (let i = 0; i < data.length; i++) {
+          // Display the apropos information on the page
+          const article = renderSaved(data[i]);
+          $("#articles").append(article);
+        }
+
+
+      });
+    });
   });
 
 });

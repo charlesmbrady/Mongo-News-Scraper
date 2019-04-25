@@ -39,7 +39,7 @@ h5{
 i {
     position: absolute;
     margin: 5px;
-    z-index: 2;
+    z-index: 3;
     color: blue;
     background: white;
     border-radius: 10%;
@@ -61,4 +61,13 @@ i:hover {
     background: white;
     right: 5px;
     top: 5px;
+}
+.note.i {
+    
+    position: relative;
+    margin: 5px;
+    z-index:2;
+}
+button.note{
+    position: absolute;
 }
