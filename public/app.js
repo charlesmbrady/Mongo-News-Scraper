@@ -46,16 +46,28 @@ $(document).ready(function () {
 
   //NaV clicks
   // Scarpe button
-  $("#scrape").on('click', function(){
+  $("#scrape").on('click', function () {
     $.ajax({
       method: "GET",
       url: "/scrape"
-    }).then(res => {
-      console.log(res);
+    }).then(data => {
+      console.log('scraped');
+      $.getJSON("/articles", data => {
+        if (data.length > 0) {
+          $("#articles").empty();
+          // For each one
+          for (let i = 0; i < data.length; i++) {
+            // Display the apropos information on the page
+            const article = renderArticleHome(data[i]);
+            $("#articles").append(article);
+          }
+        }
+
+      });
     })
   })
 
-  $("#saved").on('click', function(){
+  $("#saved").on('click', function () {
     $.ajax({
       method: "GET",
       url: "/saved"
@@ -74,37 +86,55 @@ $(document).ready(function () {
   })
 
   //clear db
-  $('#clear').on('click', function(){
+  $('#clear').on('click', function () {
     $.ajax({
       method: "GET",
       url: "/clear"
     }).then(res => {
-      console.log(res);
+      console.log('deleted');
+      $('#articles').html('no articles. get scrapin');
+
     })
-  })
+  });
+
+  $('#home').on('click', function () {
+    $.getJSON("/articles", data => {
+      if (data.length > 0) {
+        $("#articles").empty();
+        // For each one
+        for (let i = 0; i < data.length; i++) {
+          // Display the apropos information on the page
+          const article = renderArticleHome(data[i]);
+          $("#articles").append(article);
+        }
+      }
+
+    });
+  });
+
 
   // When user click's update button, update the specific note
-$(document).on("click", ".save", function() {
-  // Save the selected element
-  let selected = $(this);
-  console.log(selected.attr('data-id'));
-  // Make an AJAX POST request
-  // This uses the data-id of the update button,
-  // which is linked to the specific note title
-  // that the user clicked before
-  $.ajax({
-    type: "POST",
-    url: "/save/" + selected.attr("data-id"),
-    dataType: "json",
-    data: {
-      saved: true
-    },
-    // On successful call
-    success: (data) => {
-      console.log('saved!');
-    }
+  $(document).on("click", ".save", function () {
+    // Save the selected element
+    let selected = $(this);
+    console.log(selected.attr('data-id'));
+    // Make an AJAX POST request
+    // This uses the data-id of the update button,
+    // which is linked to the specific note title
+    // that the user clicked before
+    $.ajax({
+      type: "POST",
+      url: "/save/" + selected.attr("data-id"),
+      dataType: "json",
+      data: {
+        saved: true
+      },
+      // On successful call
+      success: (data) => {
+        console.log('saved!');
+      }
+    });
   });
-});
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function () {
     // Empty the notes from the note section

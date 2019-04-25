@@ -73,10 +73,10 @@ app.get("/scrape", (req, res) => {
 });
 
 app.get("/clear", (req, res) => {
-  db.Article.deleteMany({}).then(res => {
-    console.log('done');
+  db.Article.deleteMany({}).then(dbArticle => {
+    res.send("deleted");
   })
-})
+});
 
 // Route for getting all Articles from the db // need to edit TODO:
 app.get("/articles", (req, res) => {
