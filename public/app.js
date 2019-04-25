@@ -7,27 +7,104 @@ $(document).ready(function () {
       // For each one
       for (let i = 0; i < data.length; i++) {
         // Display the apropos information on the page
-        const article = renderArticle(data[i]);
+        const article = renderArticleHome(data[i]);
         $("#articles").append(article);
       }
     }
 
   });
 
-  function renderArticle(data) {
+  function renderArticleHome(data) {
     let article = $("<div>").addClass('article').html(
       `
       <div class="card" style="width: 18rem;">
         <img src=${data.image} class="card-img-top" alt="...">
+        <i class="fas fa-cloud-download-alt save fa-2x" data-id=${data._id}></i>
         <div class="card-body">
           <a href=${data.link} target='_blank'><p class="card-text">${data.title}</p></a>
         </div>
       </div>
       `
-    ).attr('data-id', data._id);
+    );
+    return article;
+  }
+  function renderSaved(data) {
+    let article = $("<div>").addClass('article').html(
+      `
+      <div class="card" style="width: 18rem;">
+        <img src=${data.image} class="card-img-top" alt="...">
+        <i class="fas fa-clipboard note fa-2x" data-id=${data._id}></i>
+        <i class="fas fa-minus-circle delete fa-2x" data-id=${data._id}></i>
+        <div class="card-body">
+          <a href=${data.link} target='_blank'><p class="card-text">${data.title}</p></a>
+        </div>
+      </div>
+      `
+    );
     return article;
   }
 
+  //NaV clicks
+  // Scarpe button
+  $("#scrape").on('click', function(){
+    $.ajax({
+      method: "GET",
+      url: "/scrape"
+    }).then(res => {
+      console.log(res);
+    })
+  })
+
+  $("#saved").on('click', function(){
+    $.ajax({
+      method: "GET",
+      url: "/saved"
+    }).then(data => {
+      if (data.length > 0) {
+        $("#articles").empty();
+        // For each one
+        for (let i = 0; i < data.length; i++) {
+          // Display the apropos information on the page
+          const article = renderSaved(data[i]);
+          $("#articles").append(article);
+        }
+      }
+      renderSaved();
+    })
+  })
+
+  //clear db
+  $('#clear').on('click', function(){
+    $.ajax({
+      method: "GET",
+      url: "/clear"
+    }).then(res => {
+      console.log(res);
+    })
+  })
+
+  // When user click's update button, update the specific note
+$(document).on("click", ".save", function() {
+  // Save the selected element
+  let selected = $(this);
+  console.log(selected.attr('data-id'));
+  // Make an AJAX POST request
+  // This uses the data-id of the update button,
+  // which is linked to the specific note title
+  // that the user clicked before
+  $.ajax({
+    type: "POST",
+    url: "/save/" + selected.attr("data-id"),
+    dataType: "json",
+    data: {
+      saved: true
+    },
+    // On successful call
+    success: (data) => {
+      console.log('saved!');
+    }
+  });
+});
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function () {
     // Empty the notes from the note section

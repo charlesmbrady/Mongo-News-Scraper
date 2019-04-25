@@ -8,6 +8,7 @@
     crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <script src="app.js"></script>
   <title>Scrape N Surf</title>
   <link rel="stylesheet" href="./style.css">
@@ -16,16 +17,24 @@
 <body>
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link active" href="#">Active</a>
+      
+        <button type="button" class="btn btn-dark" id="home">Home</button>
+        
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
+      
+        <button type="button" class="btn btn-secondary" id="saved">Saved</button>
+      
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
+      
+        <button type="button" class="btn btn-primary" id="scrape">Scrape</button>
+        
     </li>
     <li class="nav-item">
-      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      
+        <button type="button" class="btn btn-danger" id="clear">Clear DB</button>
+        
     </li>
   </ul>
 
@@ -34,17 +43,49 @@
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4">Scrape N' Surf</h1>
-        <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
+        <p class="lead">Click 'Scrape' and see the articles from Surfline</p>
       </div>
     </div>
     <div id="articles">
         <h5>Dont have any articles yet.  Get scrapin!</h5>
      
     </div>
-
   </div>
 
 
+
+
+
+
+
+
+
+  <!--Note Modal-->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Note Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          hello modal going to be used for notes
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

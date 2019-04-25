@@ -2,6 +2,7 @@
 // Server and database ORM framework
 const express = require("express");
 const mongoose = require("mongoose");
+const mongojs = require('mongojs');
 
 // Our scraping tools
 const axios = require("axios");
@@ -71,6 +72,12 @@ app.get("/scrape", (req, res) => {
   });
 });
 
+app.get("/clear", (req, res) => {
+  db.Article.deleteMany({}).then(res => {
+    console.log('done');
+  })
+})
+
 // Route for getting all Articles from the db // need to edit TODO:
 app.get("/articles", (req, res) => {
   // Grab every document in the Articles collection
@@ -83,6 +90,49 @@ app.get("/articles", (req, res) => {
       // If an error occurred, send it to the client
       res.json(err);
     });
+});
+
+app.get("/saved", (req, res) => {
+  // Grab only saved documents
+  db.Article.find({ saved: true })
+    .then(dbArticle => {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbArticle);
+    })
+    .catch(err => {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+app.post("/save/:id", (req, res) => {
+
+  // Update the note that matches the object id
+  db.Article.update(
+    {
+      _id: mongojs.ObjectId(req.params.id)
+    },
+    {
+      // Set the title, note and modified parameters
+      // sent in the req body.
+      $set: {
+        saved: true
+      }
+    },
+    (error, edited) => {
+      // Log any errors from mongojs
+      if (error) {
+        console.log(error);
+        res.send(error);
+      }
+      else {
+        // Otherwise, send the mongojs response to the browser
+        // This will fire off the success function of the ajax request
+        console.log(edited);
+        res.send(edited);
+      }
+    }
+  );
 });
 
 

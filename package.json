@@ -26,6 +26,7 @@
     "express": "^4.16.4",
     "jest": "^24.7.1",
     "mocha": "^6.1.4",
+    "mongojs": "^2.6.0",
     "mongoose": "^5.5.3"
   },
   "devDependencies": {

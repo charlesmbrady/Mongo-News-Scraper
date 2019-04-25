@@ -2,11 +2,14 @@
     background-image: url(./Tostidos\ boat\ people.png);
     background-size: cover;
     color: white;
-    text-shadow: 5px 2px 2px black;
+    text-shadow: 7px 5px 5px black;
     height: 70vh;
     background-position-y: 30%;
     border-bottom: 5px solid lightblue;
     border-top: 5px solid lightblue;
+}
+.display-4 {
+    font-size: 10rem;
 }
 
 #articles {
@@ -16,8 +19,10 @@
 .article {
     display: inline-block;
     margin: 15px;
+    position: relative;
     
 }
+
 
 .article:hover{
     box-shadow: 5px 10px 5px gray;
@@ -30,4 +35,30 @@
 }
 h5{
     color: black;
+}
+i {
+    position: absolute;
+    margin: 5px;
+    z-index: 2;
+    color: blue;
+    background: white;
+    border-radius: 10%;
+}
+i:hover {
+    cursor: pointer;
+}
+.lead {
+    color: lightblue;
+    font-size: 2rem;
+    text-shadow: 1px 1px 1px black;
+}
+
+.delete {
+    color: red;
+    position: absolute;
+    margin: 5px;
+    border-radius: 10%;
+    background: white;
+    right: 5px;
+    top: 5px;
 }
