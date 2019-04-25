@@ -1,0 +1,33 @@
+.jumbotron {
+    background-image: url(./Tostidos\ boat\ people.png);
+    background-size: cover;
+    color: white;
+    text-shadow: 5px 2px 2px darkslateblue;
+    height: 70vh;
+    background-position-y: 30%;
+    border-bottom: 5px solid lightblue;
+    border-top: 5px solid lightblue;
+}
+
+#articles {
+    text-align: center;
+    
+}
+.article {
+    display: inline-block;
+    margin: 15px;
+    
+}
+
+.article:hover{
+    box-shadow: 5px 10px 5px gray;
+    zoom: 1.1;
+    transition-duration: 500ms;
+}
+
+.article a:hover {
+    cursor: pointer;
+}
+h5{
+    color: black;
+}

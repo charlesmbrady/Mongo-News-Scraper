@@ -1,14 +1,32 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
   // Grab the articles as a json
   $.getJSON("/articles", data => {
-    // For each one
-    for (let i = 0; i < data.length; i++) {
-      // Display the apropos information on the page
-      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    if (data.length > 0) {
+      $("#articles").empty();
+      // For each one
+      for (let i = 0; i < data.length; i++) {
+        // Display the apropos information on the page
+        const article = renderArticle(data[i]);
+        $("#articles").append(article);
+      }
     }
+
   });
 
+  function renderArticle(data) {
+    let article = $("<div>").addClass('article').html(
+      `
+      <div class="card" style="width: 18rem;">
+        <img src=${data.image} class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href=${data.link} target='_blank'><p class="card-text">${data.title}</p></a>
+        </div>
+      </div>
+      `
+    ).attr('data-id', data._id);
+    return article;
+  }
 
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function () {

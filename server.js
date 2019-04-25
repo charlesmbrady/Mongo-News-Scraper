@@ -30,27 +30,6 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.connect(MONGODB_URI);
-//////////TEST?????????????
-// Create an object containing dummy data to save to the database
-const data = {
-  title: 'the GOAT title1',
-  link: 'link article here',
-  image: 'link to image'
-};
-
-// Save a new Example using the data object
-db.Article.create(data)
-  .then(dbExample => {
-    // If saved successfully, print the new Example document to the console
-    console.log(dbExample);
-  })
-  .catch(err => {
-    // If an error occurs, log the error message
-    console.log(err.message);
-  });
-
-/////////////endTEST?????????????
-
 // Routes
 
 // A GET route for scraping the echoJS website TODO: edit to scrape what I want
@@ -74,7 +53,7 @@ app.get("/scrape", (req, res) => {
       console.log('The image src ' + result.image);
       console.log('The link ' + result.link);
 
-    
+
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(dbArticle => {

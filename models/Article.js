@@ -16,7 +16,6 @@ const ArticleSchema = new Schema({
   link: {
     type: String,
     required: true,
-    unique: true
   },
   // 'image' is the image of the thumbnail
   image: {
@@ -26,7 +25,7 @@ const ArticleSchema = new Schema({
   // `note` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model
   // This allows us to populate the Article with an associated Note
-  comment: {
+  note: {
     type: Schema.Types.ObjectId,
     ref: "Note"
   }
