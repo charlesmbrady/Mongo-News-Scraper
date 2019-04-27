@@ -33,7 +33,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.connect(MONGODB_URI);
 // Routes
 
-// A GET route for scraping the echoJS website TODO: edit to scrape what I want
+// A GET route for scraping Surfline
 app.get("/scrape", (req, res) => {
   // First, we grab the body of the html with axios
   axios.get("https://www.surfline.com/surf-news/").then(response => {
@@ -163,8 +163,45 @@ app.post("/unsave/:id", (req, res) => {
       }
     }
   );
+});
 
-  
+// get request for finding an article based on an ID and returning the article and it's notes
+app.get("/notes/:id", (req, res) => {
+  // Grab every document in the Articles collection
+  db.Article.findById(
+    req.params.id
+  ).populate('notes')
+    .then(dbArticle => {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbArticle);
+    })
+    .catch(err => {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+// post request for creating a note,
+// actually  finds the ARTICLE based on the id and pushes the note into the Array
+app.post('/note/:id', (req, res) => {
+  db.Note.create(req.body)
+    .then(dbNote => {
+      console.log("db note : " + dbNote);
+      //if note created successfully, find the article  and push the note into the array
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true })
+    })
+    .then((dbArticle) => {
+      res.json(dbArticle);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+
+// get request for notes, actually gets the Article, populated with notes array
+app.get('/notes/:id', (req, res) => {
+
 });
 
 // Start the server

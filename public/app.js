@@ -33,9 +33,9 @@ $(document).ready(function () {
       `
       <div class="card" style="width: 18rem;">
         <img src=${data.image} class="card-img-top" alt="...">
-        <button class="note" type="button" data-toggle="modal" data-target="#exampleModalCenter">
-          <i class="fas fa-clipboard note fa-2x" data-id=${data._id}></i>
-        </button>
+        
+          <i class="fas fa-clipboard note fa-2x" data-id=${data._id} class="noteButton" type="button" data-toggle="modal" data-target="#exampleModalCenter"></i>
+        
         <i class="fas fa-minus-circle delete fa-2x" data-id=${data._id}></i>
         <div class="card-body">
           <a href=${data.link} target='_blank'><p class="card-text">${data.title}</p></a>
@@ -137,6 +137,7 @@ $(document).ready(function () {
       }
     });
   });
+
   // Whenever someone clicks a p tag
   $(document).on("click", "p", function () {
     // Empty the notes from the note section
@@ -196,8 +197,7 @@ $(document).ready(function () {
       });
 
     // Also, remove the values entered in the input and textarea for note entry
-    $("#titleinput").val("");
-    $("#bodyinput").val("");
+    $("#note-body").val("");
   });
 
 
@@ -233,11 +233,56 @@ $(document).ready(function () {
           const article = renderSaved(data[i]);
           $("#articles").append(article);
         }
-
-
       });
     });
   });
 
-});
+  // Get request for getting a specific article and its populated "notes" when the note is clicked
+  $(document).on("click", ".note", function () {
+    // Empty the notes from the note section
+    $("#notes-list").empty();
+    // Save the id from the p tag
+    const thisId = $(this).attr("data-id");
+    $("#submit-note").attr('data-id', thisId);
+
+    // Now make an ajax call for the Article
+    $.ajax({
+      method: "GET",
+      url: "/notes/" + thisId
+    })
+      // With that done, add the note information to the page
+      .then(article => {
+        console.log(article);
+        $("#article-title").text(article.title);
+        const notes = article.notes;
+        notes.forEach((note) => {
+          console.log(note);
+          const newNote = $("<li>").text(note.body);
+          $("#notes-list").append(newNote);
+        })
+      })
+  });
+
+
+  // submitting a note
+  $(document).on("click", "#submit-note", function () {  
+    const thisId = $(this).attr("data-id");
+    const noteBody = $("#note-body").val();
+    // Now make an ajax call for the Article
+    $.ajax({
+      method: "POST",
+      url: "/note/" + thisId,
+      data: {
+        body: noteBody
+      }
+    })
+      // With that done, add the note information to the page
+      .then((req, response) => {
+        $("#note-body").val("");
+        const newNote = $("<li>").text(noteBody);
+          $("#notes-list").append(newNote);
+      });
+  });
+
+});//end doc
 

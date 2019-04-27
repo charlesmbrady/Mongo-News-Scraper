@@ -49,8 +49,9 @@ i:hover {
 }
 .lead {
     color: lightblue;
-    font-size: 2rem;
+    font-size: 1.7rem;
     text-shadow: 1px 1px 1px black;
+    padding: 0px 5px 0px 5px;
 }
 
 .delete {
@@ -70,4 +71,12 @@ i:hover {
 }
 button.note{
     position: absolute;
+}
+.lead{
+    color: blue;
+    text-shadow: 2px 2px white;
+    background: whitesmoke;
+    opacity: .5;
+    border-radius: 5px;
+    padding: 0px 5px 0px 5px;
 }
